@@ -2,7 +2,6 @@
 # NOTE: Before usage, make sure executable permission are set `chmod +x <name>.sh`
 
 # VAR. DEFAULT
-
 FAILED=0
 OUT_FOLDER="tmp/out"
 DEFAULT_EXPORT_FILENAME="export"
