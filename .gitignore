@@ -1,2 +1,4 @@
 .idea
-/diff
+
+/tmp
+/queries/*.sparql

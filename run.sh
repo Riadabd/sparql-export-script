@@ -1,8 +1,12 @@
 #!/bin/bash
 # NOTE: Before usage, make sure executable permission are set `chmod +x <name>.sh`
 
-SPARQL_ENDPOINT='http://localhost:8890/sparql'
+# VAR. DEFAULT
+
 FAILED=0
+OUT_FOLDER="tmp/out"
+DEFAULT_EXPORT_FILENAME="export"
+SPARQL_ENDPOINT='http://localhost:8890/sparql'
 
 while :; do
   case $1 in
@@ -26,8 +30,8 @@ while :; do
   shift
 done
 
-mkdir -p diff
-rm -rf diff/*export.ttl
+mkdir -p "$OUT_FOLDER"
+rm -rf "$OUT_FOLDER"/"$DEFAULT_EXPORT_FILENAME".ttl
 
 for path in queries/*.sparql;do
     filename=$(basename "$path" .sparql)
@@ -35,7 +39,7 @@ for path in queries/*.sparql;do
     echo "[INFO] Generating export for $filename ..."
     if curl --fail -X POST "$SPARQL_ENDPOINT" \
       -H 'Accept: text/plain' \
-      --form-string "query=$query" >> diff/export.ttl; then
+      --form-string "query=$query" >> "$OUT_FOLDER"/export.ttl; then
       echo "[INFO] Finished export for $filename!"
     else
       echo "[ERROR] export for $filename Failed!"
@@ -43,7 +47,7 @@ for path in queries/*.sparql;do
     fi;
     echo "================================================================================"
 done
-echo "[INFO] Export Done! You can find your export in diff/export.ttl"
+echo "[INFO] Export Done! You can find your export in $OUT_FOLDER/export.ttl"
 if ((FAILED > 0)); then
-  echo "[WARNING] some queries failed, export incomplete ..."
+  echo "[WARNING] $FAILED queries failed, export incomplete ..."
 fi;
