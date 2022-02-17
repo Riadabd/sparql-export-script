@@ -36,7 +36,7 @@ WHERE {
       ?site organisatie:bestaatUit ?address.
       # has besluit:Bestuursgaan
       ?bestuursorgaan besluit:bestuurt ?eredienst.
-      # has besluit:Bestuursgaan "in tijd" with either a eind-date or a start-& end-date
+      # has besluit:Bestuursgaan "in tijd" with either an eind-date or a start-& end-date
       ?bestuursorgaanInTijd generiek:isTijdspecialisatieVan ?bestuursorgaan.
       ?bestuursorgaanInTijd mandaat:bindingStart ?bindingStart.
       OPTIONAL {
