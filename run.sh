@@ -50,13 +50,13 @@ for path in queries/*.sparql; do
       touch "$OUT_FOLDER/$current_date-$filename/$export_graph_filename"
       echo "[INFO] Created graph file for $filename!"
     else
-      echo "[ERROR] export for $filename Failed!"
+      echo "[ERROR] Export for $filename failed!"
       FAILED+=1
     fi;
     echo "================================================================================"
 done
 
-echo "[INFO] Export Done! You can find your export in $OUT_FOLDER/$current_date-$filename/"
+echo "[INFO] Export done! You can find your export in $OUT_FOLDER/$current_date-$filename/"
 
 if ((FAILED > 0)); then
   echo "[WARNING] $FAILED queries failed, export incomplete ..."
