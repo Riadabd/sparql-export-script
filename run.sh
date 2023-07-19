@@ -7,6 +7,7 @@ OUT_FOLDER="tmp/"
 DEFAULT_EXPORT_FILENAME="export"
 SPARQL_ENDPOINT='http://localhost:8890/sparql'
 WRITE_TEMP_GRAPH=false
+TEMP_GRAPH=""
 
 while :; do
   case $1 in
@@ -19,6 +20,13 @@ while :; do
       ;;
     # End of all options.
     --write-temp-graphs)
+      if [ "$2" ]; then
+        TEMP_GRAPH=$2
+        shift
+      else
+        echo "Missing graph name!"
+        exit 1
+      fi
       WRITE_TEMP_GRAPH=true
       shift
       ;;
@@ -57,7 +65,7 @@ for path in queries/*.sparql; do
       # where the number of dashes is not fixed, and the final string after the dash is the name
       # of a particular data type.
       if [ "$WRITE_TEMP_GRAPH" = true ] ; then
-        echo "http://mu.semte.ch/graphs/temp/$(echo $filename | awk -F- '{print $NF}')" >> "$OUT_FOLDER/$current_date-$filename/$export_graph_filename"
+        echo "$TEMP_GRAPH/$(echo $filename | awk -F- '{print $NF}')" >> "$OUT_FOLDER/$current_date-$filename/$export_graph_filename"
       fi
     else
       echo "[ERROR] Export for $filename failed!"
