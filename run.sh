@@ -62,8 +62,8 @@ for path in queries/*.sparql; do
       echo "[INFO] Created graph file for $filename!"
 
       # This snippet assumes the sparql filename is of the format "{}-{}-{}-{}.sparql"
-      # where the number of dashes is not fixed, and the final string after the dash is the name
-      # of a particular data type.
+      # where the number of dashes is not fixed, and the string after the final dash is the name
+      # of the target data type.
       if [ "$WRITE_TEMP_GRAPH" = true ] ; then
         echo "$TEMP_GRAPH/$(echo $filename | awk -F- '{print $NF}')" >> "$OUT_FOLDER/$current_date-$filename/$export_graph_filename"
       fi
