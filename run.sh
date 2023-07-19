@@ -56,7 +56,7 @@ for path in queries/*.sparql; do
     echo "================================================================================"
 done
 
-echo "[INFO] Export Done! You can find your export in $OUT_FOLDER/$current_date-$filename/$export_ttl_filename"
+echo "[INFO] Export Done! You can find your export in $OUT_FOLDER/$current_date-$filename/"
 
 if ((FAILED > 0)); then
   echo "[WARNING] $FAILED queries failed, export incomplete ..."
