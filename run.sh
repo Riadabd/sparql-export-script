@@ -1,38 +1,39 @@
 #!/bin/bash
 # NOTE: Before usage, make sure executable permission are set `chmod +x <name>.sh`
 
-# VAR. DEFAULT
+# Variable defaults
 FAILED=0
 OUT_FOLDER="tmp/"
 DEFAULT_EXPORT_FILENAME="export"
+
 SPARQL_ENDPOINT='http://localhost:8890/sparql'
+
 WRITE_TEMP_GRAPH=false
 TEMP_GRAPH="http://graphs/temp"
 
 while :; do
   case $1 in
     --sparql-endpoint)
-      if [ "$2" ]; then
-        SPARQL_ENDPOINT=$2
-        shift
-      fi
-      shift
-      ;;
-    --write-temp-graphs)
-      if [ "$2" ]; then
-        TEMP_GRAPH=$2
-        shift
-      else
-        echo "Missing graph name!"
+       if [ -z "$2" ] || [[ "$2" == -* ]]; then
+        echo "[Error] --sparql-endpoint option requires a value"
         exit 1
       fi
+      SPARQL_ENDPOINT="$2"
+      shift 1
+      ;;
+    --write-temp-graphs)
+      if [ -z "$2" ] || [[ "$2" == -* ]]; then
+        echo "[Error] --write-temp-graphs option requires a value"
+        exit 1
+      fi
+      TEMP_GRAPH="$2"
       WRITE_TEMP_GRAPH=true
-      shift
+      shift 1
       ;;
     -?*)
       printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
       ;;
-    # Default case: No more options, so break out of the loop.
+    # Default case: No more options, so break out of the loop
     *)
       break
   esac
@@ -56,6 +57,7 @@ for path in queries/*.sparql; do
     if curl --fail -X POST "$SPARQL_ENDPOINT" \
       -H 'Accept: text/plain' \
       --form-string "query=$query" >> "$OUT_FOLDER"/"$current_date-$filename"/"$export_ttl_filename"; then
+
       echo "[INFO] Finished export for $filename!"
       touch "$OUT_FOLDER/$current_date-$filename/$export_graph_filename"
       echo "[INFO] Created graph file for $filename!"
