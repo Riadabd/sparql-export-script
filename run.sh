@@ -18,7 +18,6 @@ while :; do
       fi
       shift
       ;;
-    # End of all options.
     --write-temp-graphs)
       if [ "$2" ]; then
         TEMP_GRAPH=$2
