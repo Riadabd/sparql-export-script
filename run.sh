@@ -4,7 +4,6 @@
 # Variable defaults
 FAILED=0
 OUT_FOLDER="tmp/"
-DEFAULT_EXPORT_FILENAME="export"
 
 SPARQL_ENDPOINT="http://localhost:8890/sparql"
 
