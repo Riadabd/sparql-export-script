@@ -6,7 +6,7 @@ FAILED=0
 OUT_FOLDER="tmp/"
 DEFAULT_EXPORT_FILENAME="export"
 
-SPARQL_ENDPOINT='http://localhost:8890/sparql'
+SPARQL_ENDPOINT="http://localhost:8890/sparql"
 
 WRITE_TEMP_GRAPH=false
 TEMP_GRAPH="http://graphs/temp"
