@@ -35,7 +35,6 @@ for path in queries/*.sparql; do
 
     # Create a turtle file with the current timestamp
     current_date=$(date '+%Y%m%d%H%M%S')
-    mkdir -p "$OUT_FOLDER"/"$current_date-$filename"
     export_ttl_filename="$current_date-$filename.ttl"
 
     query=$(cat "$path")
