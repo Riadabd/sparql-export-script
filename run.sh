@@ -28,7 +28,7 @@ while :; do
 done
 
 mkdir -p "$OUT_FOLDER"
-rm -rf "$OUT_FOLDER"/*
+rm -rf "${OUT_FOLDER:?}"/*
 
 for path in queries/*.sparql; do
     filename=$(basename "$path" .sparql)
