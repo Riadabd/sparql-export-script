@@ -1,13 +1,12 @@
-## Sparql Export Script
+# Sparql Export Script
 
-### Usage
+## Usage
 
-Place the [`CONSTRUCT`](https://www.w3.org/TR/rdf-sparql-query/#construct) queries you would like to be executed in the `/queries` directory.
+Place the [`CONSTRUCT`](https://www.w3.org/TR/rdf-sparql-query/#construct) queries you would like to be executed inside the `queries/` directory.
 
 Run the script:
 ```
-run.sh --sparql-endpoint <url> --write-temp-graphs
+run.sh --sparql-endpoint <url>
 ```
 > **Note:**
 > * The sparql-endpoint is set to http://localhost:8890/sparql by default.
-> * `--write-temp-graphs` takes no values and is used to write custom temp graph names inside `.graph` files or to keep them empty.
