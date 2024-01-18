@@ -10,7 +10,7 @@ SPARQL_ENDPOINT="http://localhost:8890/sparql"
 while :; do
   case $1 in
     --sparql-endpoint)
-       if [ -z "$2" ] || [[ "$2" == -* ]]; then
+      if [ -z "$2" ] || [[ "$2" == -* ]]; then
         echo "[Error] --sparql-endpoint option requires a value"
         exit 1
       fi
@@ -37,24 +37,24 @@ if [ ${#sparql_queries[@]} -eq 0 ]; then
 fi
 
 for path in queries/*.sparql; do
-    filename=$(basename "$path" .sparql)
+  filename=$(basename "$path" .sparql)
 
-    # Create a turtle file with the current timestamp
-    current_date=$(date '+%Y%m%d%H%M%S')
-    export_ttl_filename="$current_date-$filename.ttl"
+  # Create a turtle file with the current timestamp
+  current_date=$(date '+%Y%m%d%H%M%S')
+  export_ttl_filename="$current_date-$filename.ttl"
 
-    query=$(cat "$path")
-    echo "[INFO] Generating export for $filename ..."
-    if curl --fail -X POST "$SPARQL_ENDPOINT" \
-      -H 'Accept: text/plain' \
-      --form-string "query=$query" >> "$OUT_FOLDER"/"$export_ttl_filename"; then
+  query=$(cat "$path")
+  echo "[INFO] Generating export for $filename ..."
+  if curl --fail -X POST "$SPARQL_ENDPOINT" \
+    -H 'Accept: text/plain' \
+    --form-string "query=$query" >> "$OUT_FOLDER"/"$export_ttl_filename"; then
 
-      echo "[INFO] Finished export for $filename!"
-    else
-      echo "[ERROR] Export for $filename failed!"
-      FAILED=$((FAILED + 1))
-    fi;
-    echo -e "================================================================================\n"
+    echo "[INFO] Finished export for $filename!"
+  else
+    echo "[ERROR] Export for $filename failed!"
+    FAILED=$((FAILED + 1))
+  fi;
+  echo -e "================================================================================\n"
 done
 
 if ((FAILED > 0)); then
