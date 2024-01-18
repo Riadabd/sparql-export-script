@@ -1,5 +1,5 @@
 #!/bin/bash
-# NOTE: Make sure executable permissions are set (`chmod +x <name>.sh`)
+# NOTE: Make sure executable permissions are set (`chmod +x run.sh`)
 
 # Variable defaults
 FAILED=0
