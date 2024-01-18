@@ -3,7 +3,7 @@
 
 # Variable defaults
 FAILED=0
-OUT_FOLDER="tmp/"
+OUT_FOLDER="tmp"
 
 SPARQL_ENDPOINT="http://localhost:8890/sparql"
 
@@ -30,6 +30,12 @@ done
 mkdir -p "$OUT_FOLDER"
 rm -rf "${OUT_FOLDER:?}"/*
 
+mapfile -t sparql_queries < <(find queries/ -maxdepth 1 -name "*.sparql")
+if [ ${#sparql_queries[@]} -eq 0 ]; then
+  echo "[Error] There are no queries inside queries/"
+  exit 1
+fi
+
 for path in queries/*.sparql; do
     filename=$(basename "$path" .sparql)
 
@@ -46,13 +52,13 @@ for path in queries/*.sparql; do
       echo "[INFO] Finished export for $filename!"
     else
       echo "[ERROR] Export for $filename failed!"
-      FAILED+=1
+      FAILED=$((FAILED + 1))
     fi;
     echo -e "================================================================================\n"
 done
 
-echo "[INFO] Export done! You can find your export(s) in $OUT_FOLDER."
-
 if ((FAILED > 0)); then
-  echo "[WARNING] $FAILED queries failed, export incomplete ..."
-fi;
+  echo "[WARNING] $FAILED query(ies) failed, export incomplete ..."
+else
+  echo "[INFO] Export done! You can find your export(s) in $OUT_FOLDER."
+fi
